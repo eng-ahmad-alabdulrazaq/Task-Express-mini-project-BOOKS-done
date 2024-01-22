@@ -18,9 +18,6 @@ const getAllBooks = async (req, res, next) => {
 //getBookById
 const getBookById = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.body.image = req.file.path;
-    }
     return res.status(200).json(req.book);
   } catch (error) {
     next(error);
@@ -32,8 +29,11 @@ const getBookById = async (req, res, next) => {
 const bookCreate = async (req, res, next) => {
   //
   try {
+    if (req.file) {
+      req.body.image = req.file.path;
+    }
     const book = await Book.create(req.body);
-    return res.status(201).json();
+    return res.status(201).json(book);
   } catch (error) {
     next(error);
   }
